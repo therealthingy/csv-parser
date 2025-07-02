@@ -1,3 +1,9 @@
+CHANGES:
+  - Renamed `error` 2 `err`
+  - Transformed header 2 (EXPERIMENTAL) C++ 20 module
+
+---
+
 # Vince's CSV Parser
 [![CMake on Windows](https://github.com/vincentlaucsb/csv-parser/actions/workflows/cmake-multi-platform.yml/badge.svg)](https://github.com/vincentlaucsb/csv-parser/actions/workflows/cmake-multi-platform.yml)
 
@@ -25,7 +31,7 @@
 There's plenty of other CSV parsers in the wild, but I had a hard time finding what I wanted. Inspired by Python's `csv` module, I wanted a library with **simple, intuitive syntax**. Furthermore, I wanted support for special use cases such as calculating statistics on very large files. Thus, this library was created with these following goals in mind.
 
 ### Performance and Memory Requirements
-A high performance CSV parser allows you to take advantage of the deluge of large datasets available. By using overlapped threads, memory mapped IO, and 
+A high performance CSV parser allows you to take advantage of the deluge of large datasets available. By using overlapped threads, memory mapped IO, and
 minimal memory allocation, this parser can quickly tackle large CSV files--even if they are larger than RAM.
 
 In fact, [according to Visual Studio's profier](https://github.com/vincentlaucsb/csv-parser/wiki/Microsoft-Visual-Studio-CPU-Profiling-Results) this
@@ -74,7 +80,7 @@ While C++17 is recommended, C++11 is the minimum version required. This library 
 This library is available as a single `.hpp` file under [`single_include/csv.hpp`](single_include/csv.hpp).
 
 ### CMake Instructions
-If you're including this in another CMake project, you can simply clone this repo into your project directory, 
+If you're including this in another CMake project, you can simply clone this repo into your project directory,
 and add the following to your CMakeLists.txt:
 
 ```
@@ -125,7 +131,7 @@ for (CSVRow& row: reader) { // Input iterator
 
 CSVReader reader("very_big_file.csv");
 CSVRow row;
- 
+
 while (reader.read_row(row)) {
     // Do stuff with row here
 }
@@ -200,7 +206,7 @@ for (auto& row: reader) {
         // Can use get<>() with any integer type, but negative
         // numbers cannot be converted to unsigned types
         row["timestamp"].get<int>();
-        
+
         // You can also attempt to parse hex values
         int value;
         if (row["hexValue"].try_parse_hex(value)) {
@@ -220,9 +226,9 @@ for (auto& row: reader) {
 ```
 
 ### Converting to JSON
-You can serialize individual rows as JSON objects, where the keys are column names, or as 
+You can serialize individual rows as JSON objects, where the keys are column names, or as
 JSON arrays (which don't contain column names). The outputted JSON contains properly escaped
-strings with minimal whitespace and no quoting for numeric values. How these JSON fragments are 
+strings with minimal whitespace and no quoting for numeric values. How these JSON fragments are
 assembled into a larger JSON document is an exercise left for the user.
 
 ```cpp
@@ -262,7 +268,7 @@ format.delimiter('\t')
       .quote('~')
       .header_row(2);   // Header is on 3rd row (zero-indexed)
       // .no_header();  // Parse CSVs without a header row
-      // .quote(false); // Turn off quoting 
+      // .quote(false); // Turn off quoting
 
 // Alternatively, we can use format.delimiter({ '\t', ',', ... })
 // to tell the CSV guesser which delimiters to try out
@@ -332,7 +338,7 @@ auto rows = parse(csv_string);
 for (auto& r: rows) {
     // Do stuff with row here
 }
-    
+
 // Method 2: Using _csv operator
 auto rows = "Actor,Character\r\n"
     "Will Ferrell,Ricky Bobby\r\n"
