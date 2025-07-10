@@ -5893,6 +5893,9 @@ class StreamParser : public IBasicCSVParser {
         if (this->eof())
             return;
 
+        // Reset parser state
+        this->field_start = UNINITIALIZED_FIELD;
+        this->field_length = 0;
         this->reset_data_ptr();
         this->data_ptr->_data = std::make_shared<std::string>();
 
