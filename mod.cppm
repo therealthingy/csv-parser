@@ -7946,8 +7946,8 @@ CSV_INLINE void CSVStat::calc_chunk() {
             counts.push_back({});
             rolling_means.push_back(0);
             rolling_vars.push_back(0);
-            mins.push_back(std::numeric_limits<long double>::quiet_NaN());
-            maxes.push_back(std::numeric_limits<long double>::quiet_NaN());
+            mins.push_back(NAN);
+            maxes.push_back(NAN);
             n.push_back(0);
         }
     }

@@ -67,6 +67,10 @@ do not hesitate to report it.
 
 In addition to the [Features & Examples](#features--examples) below, a [fully-fledged online documentation](https://vincela.com/csv/) contains more examples, details, interesting features, and instructions for less common use cases.
 
+## Sponsors
+If you use this library for work, please [become a sponsor](https://github.com/sponsors/vincentlaucsb). Your donation
+will fund continued maintenance and development of the project.
+
 ## Integration
 
 This library was developed with Microsoft Visual Studio and is compatible with >g++ 7.5 and clang.
