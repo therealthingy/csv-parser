@@ -7087,8 +7087,8 @@ CSV_INLINE int ColNames::index_of(csv::string_view col_name) const {
 CSV_INLINE size_t ColNames::size() const noexcept {
     return this->col_names.size();
 }
-
 }    // namespace internals
+}    // namespace csv
 /** @file
  *  Defines the data type used for storing information about a CSV row
  */
@@ -7107,7 +7107,7 @@ CSV_INLINE void CSVFieldList::allocate() {
     _current_buffer_size = 0;
     _back = buffers.back().get();
 }
-}
+}    // namespace internals
 
 /** Return a CSVField object corrsponding to the nth value in the row.
  *
@@ -7356,7 +7356,7 @@ CSV_INLINE CSVRow::iterator CSVRow::iterator::operator-(difference_type n) const
 #ifdef _MSC_VER
 #    pragma endregion CSVRow Iterator
 #endif
-}
+}    // namespace csv
 
 /** @file
  *  Defines an input iterator for csv::CSVReader
@@ -7418,7 +7418,7 @@ CSV_INLINE CSVReader::iterator CSVReader::iterator::operator++(int) {
 
     return temp;
 }
-}
+}    // namespace csv
 
 /** @file
  *  @brief Defines functionality needed for basic CSV parsing
@@ -8213,3 +8213,4 @@ CSV_INLINE std::unordered_map<std::string, DataType> csv_data_types(const std::s
 
     return csv_dtypes;
 }
+}    // namespace csv

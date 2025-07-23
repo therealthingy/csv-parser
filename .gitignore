@@ -19,6 +19,9 @@ docs/html
 *.i*
 *.*log
 
+# VSCode
+.vscode/
+
 # Compiled Object files
 *.slo
 *.lo
