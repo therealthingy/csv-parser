@@ -5,7 +5,7 @@ CHANGES:
 ---
 
 # Vince's CSV Parser
-[![CMake on Windows](https://github.com/vincentlaucsb/csv-parser/actions/workflows/cmake-multi-platform.yml/badge.svg)](https://github.com/vincentlaucsb/csv-parser/actions/workflows/cmake-multi-platform.yml) [![Memory and Thread Sanitizers](https://github.com/vincentlaucsb/csv-parser/actions/workflows/sanitizers.yml/badge.svg)](https://github.com/vincentlaucsb/csv-parser/actions/workflows/sanitizers.yml)
+[![CMake on Windows](https://github.com/vincentlaucsb/csv-parser/actions/workflows/cmake-multi-platform.yml/badge.svg)](https://github.com/vincentlaucsb/csv-parser/actions/workflows/cmake-multi-platform.yml) [![Memory and Thread Sanitizers](https://github.com/vincentlaucsb/csv-parser/actions/workflows/sanitizers.yml/badge.svg)](https://github.com/vincentlaucsb/csv-parser/actions/workflows/sanitizers.yml) [![codecov](https://codecov.io/gh/vincentlaucsb/csv-parser/graph/badge.svg?token=8gJtCOfP3d)](https://codecov.io/gh/vincentlaucsb/csv-parser)
 
 - [Vince's CSV Parser](#vinces-csv-parser)
   - [Motivation](#motivation)
@@ -58,11 +58,12 @@ On my computer (12th Gen Intel(R) Core(TM) i5-12400 @ 2.50 GHz/Western Digital B
 
 By default, the parser reads CSV data in 10MB chunks. This balance was determined through empirical testing to optimize throughput while minimizing memory overhead and thread synchronization costs.
 
-If you encounter rows larger than the chunk size, use `set_chunk_size()` to adjust:
+If you encounter rows larger than the chunk size, pass a custom `CSVFormat` with `chunk_size()`:
 
 ```cpp
-CSVReader reader("massive_rows.csv");
-reader.set_chunk_size(100 * 1024 * 1024);  // 100MB chunks
+CSVFormat fmt;
+fmt.chunk_size(100 * 1024 * 1024);  // 100MB chunks
+CSVReader reader("massive_rows.csv", fmt);
 for (auto& row : reader) {
     // Process row
 }
@@ -104,7 +105,7 @@ Please keep reports grounded in real use cases—no contrived edge cases or phil
 
 ## Documentation
 
-In addition to the [Features & Examples](#features--examples) below, a [fully-fledged online documentation](https://vincela.com/csv/) contains more examples, details, interesting features, and instructions for less common use cases.
+In addition to the [Features & Examples](#features--examples) below, a [fully-fledged online documentation](https://vincentlaucsb.github.io/csv-parser/) contains more examples, details, interesting features, and instructions for less common use cases.
 
 ## Sponsors
 If you use this library for work, please [become a sponsor](https://github.com/sponsors/vincentlaucsb). Your donation
@@ -123,7 +124,14 @@ While C++17 is recommended, C++11 is the minimum version required. This library 
 [Martin Moene's string view library](https://github.com/martinmoene/string-view-lite) if `std::string_view` is not available.
 
 ### Single Header
-This library is available as a single `.hpp` file under [`single_include/csv.hpp`](single_include/csv.hpp).
+**[📥 Download csv.hpp](https://vincentlaucsb.github.io/csv-parser/csv.hpp)** — Available on GitHub Pages
+
+Or copy the URL:
+```
+https://vincentlaucsb.github.io/csv-parser/csv.hpp
+```
+
+The file is automatically generated and deployed on every commit to `master`, ensuring you always have the latest version.
 
 ### CMake Instructions
 If you're including this in another CMake project, you can simply clone this repo into your project directory,
@@ -458,8 +466,9 @@ DataFrame<int> df2(reader, "employee_id");
 // O(1) lookups by key
 auto salary = df[12345]["salary"].get<double>();
 
-// Access by position also works
-auto first_row = df[0];
+// Positional access: operator[](size_t) is disabled when KeyType is an integer
+// type to prevent ambiguity with operator[](const KeyType&). Use iloc() instead.
+auto first_row = df.iloc(0);
 auto name = first_row["name"].get<std::string>();
 
 // Check if a key exists
